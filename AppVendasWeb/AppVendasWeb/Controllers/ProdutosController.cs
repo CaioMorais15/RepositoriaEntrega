@@ -48,6 +48,8 @@ namespace AppVendasWeb.Controllers
         // GET: Produtos/Create
         public IActionResult Create()
         {
+            List<Categoria> listaCategoria = _context.Categorias.ToList();
+            ViewData["ListaCategoria"] = listaCategoria;
             ViewData["CategoriaId"] = new SelectList(_context.Categorias, "CategoriaId", "CategoriaNome");
             return View();
         }

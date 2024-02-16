@@ -44,7 +44,7 @@
                 <div class="col">
                     <div class="input-group mb-3">
                         <input id="NomeCliente" name="NomeCliente" class="form-control p-2 py-3 rounded-end" value="@ViewData["ClienteSelecionado"]" readonly />
-                        <input asp-for="ClienteId" type="hidden" value="@ViewData["IdSelecionado"]  />
+                        <input asp-for="ClienteId" type="hidden" value="@ViewData["IdSelecionado"]             />
                         <span asp-validation-for="ClienteId" class="text-danger"></span>
                         <button type="button" class="btn btn-outline-light p-2 py-3" data-bs-toggle="modal" data-bs-target="#janelaCliente">
                             <svg bootstrap-icon="Search" width="20" height="20" aria-label="Pesquisar"></svg> Buscar Cliente
@@ -81,7 +81,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-success w-100 h-100">
                             <svg bootstrap-icon="CheckLg" width="20" height="20" aria-label="Pesquisar"></svg>
-                            <br /> Salvar
+                            <br /> Buscar
                         </button>
                     </div>
                 </div>

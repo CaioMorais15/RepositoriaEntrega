@@ -25,11 +25,14 @@ namespace AppVendasWeb.Controllers
         public IActionResult IniciarVenda()
         {
             List<Cliente> listaClientes = _context.Cliente.ToList();
+            List<Categoria> listaCategorias = _context.Categorias.ToList();
             List<Produto> listaProdutos = _context.Produtos.ToList();
             ViewData["ListaClientes"] = listaClientes;
             ViewData["ListaProdutos"] = listaProdutos;
+            ViewData["ListaCategoria"] = listaCategorias;
             ViewData["ClienteSelecionado"] = "Nenhum cliente selecionado";
-            ViewData["IdSelecionado"] = Cliente.ClienteNome;
+            ViewData["ClienteSelecionado"] = "Nenhum cliente selecionado";
+
             return View();
         }
 
@@ -72,6 +75,22 @@ namespace AppVendasWeb.Controllers
             List<Produto> listaProdutos = _context.Produtos.OrderBy(p => p.Descricao).ToList();
             ViewData["ListaClientes"] = listaClientes;
             ViewData["ListaProdutos"] = listaProdutos;
+
+            if (novaVenda.ClienteId.ToString() == "00000000-0000-0000-0000-000000000000")
+            {
+                return View("IniciarVenda");
+            }
+
+            novaVenda.NovaVendaId = Guid.NewGuid();
+            novaVenda.Cliente = _context.Cliente.FirstOrDefault(c => c.ClienteId == novaVenda.ClienteId);
+            var ultimaNotaFiscal = _context.NovaVendas.Max(v => v.NotaFiscal);
+            if (ultimaNotaFiscal == null)
+            {
+                ultimaNotaFiscal = 0;
+            }
+            novaVenda.NotaFiscal = ultimaNotaFiscal = 1;
+            _context.Add(novaVenda);
+            await _context.SaveChangesAsync();
 
             return View("IniciarVenda", novaVenda);
         }

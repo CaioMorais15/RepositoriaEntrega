@@ -1,8 +1,17 @@
 ﻿@model AppVendasWeb.Models.Produto
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Adicionar";
+
+    List<Categoria> listaCategorias = (List<Categoria>)ViewData["ListaCategoria"];
+    Categoria categoria = (Categoria)ViewData["CategoriaSelecionado"];
+
+    List<Categoria> listaCategoriaSelecionadas = new List<Categoria>();
+
+
 }
+
+
 
 <h1>Create</h1>
 
@@ -29,8 +38,91 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
+
+            <!-- Modal -->
+
+            <div class="modal fade" id="janelaProduto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content bg-dark bg-gradient text-light">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Selecione o Cliente</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="buscaCliente"
+                                           placeholder="Pesquisar por nome" aria-label="Pesquisar por nome"
+                                           aria-describedby="button-addon2">
+                                    <a class="btn btn-outline-light" id="button-addon2">
+                                        <svg bootstrap-icon="Search" width="16" height="16" aria-label="Pesquisar"></svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-dark table-striped table-hover" id="tabelaClientes">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Nome do Cliente
+                                            </th>
+                                            <th>
+                                                CPF
+                                            </th>
+                                            <th>
+                                                Selecionar
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in listaCategorias)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CategoriaNome)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CategoriaId)
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <a class="text-decoration-none link-light" asp-controller="Home" asp-action="SelecionaCategoria" asp-route-id="@item.CategoriaId" asp-route-id="@item.CategoriaId">
+                                                        <svg class="mx-2" bootstrap-icon="Check2Square" width="20" height="20" aria-label="Editar"></svg>
+                                                    </a>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" name="buscaCliente"
+                                                               placeholder="Pesquisar por nome" aria-label="Pesquisar por nome"
+                                                               aria-describedby="button-addon2">
+                                                        <a class="btn btn-outline-light" id="button-addon2">
+                                                            <svg bootstrap-icon="Search" width="16" height="16" aria-label="Pesquisar"></svg>
+                                                        </a>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </form>
+        <div class="col">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success w-100 h-100">
+                    <svg bootstrap-icon="CheckLg" width="20" height="20" aria-label="Pesquisar"></svg>
+                    <br /> Buscar
+                </button>
+            </div>
+        </div>
     </div>
+</div>
 </div>
 
 <div>
